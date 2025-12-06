@@ -1,49 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UFT-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-      <title>Vx100hub</title>
-      <link rel="stylesheet" type="text/css" href="./style.css">
-   </head>
-   <body>
-      <svg width="150" height="200" viewpoint="0 0 200 200">
-         <!-- Head -->
-         <ellipse id="head" cx="150" cy="100" rx="150" ry="100" fill="white"/>
-         <!-- upperbody -->
-         <ellipse id="body" cx="150" cy="90" rx="135" ry="95" fill="white"/>
-         <ellipse id="body2" cx="150" cy="90" rx="125" ry="90" fill="white"/>
-         <!-- shoulder -->
-         <circle id="leftshoulder" cx="145" cy="87" fill="white"/>
-         <circle id="rightshoulder" cx="155" cy="87" fill="white"/>
-         <!-- arms -->
-         <rec id="leftArm" x="140" y="85" width="10" height="25" rx="5" fill="white"/>
-         <rec id="rightArm" x="180" y="85" width="10" height="25" rx="5" fill="white"/>
-         <!-- lowerbody -->
-         <rec id="lowRec" x="150" y="80" width="5" height="12.5" rx="3" fill="pink"/>
-         <rec x="145" y="80" width="10" height="5" rx="3" fill="white"/>
-         <!-- shorts -->
-         <g id="shorts" transform="rotate(-15 150 90)">
-         <rec id="leftShort" x="145" y="80" width="10" height="5" rx="3" fill="white"/>
-         <rec id="rightShort" x="155" y="80" width="10" height="5" rx="3" fill="white"/>   
-         </g>
-         <!-- legs -->
-         <rec id="leftLeg" x="140" y="76" width="10" height="3" rx="5" fill="black"/>
-         <rec id="rightleg" x="150" y="76" width="10" height="3" rx="5" fill="black"/>
-         <!-- socks -->
-         <defs>
-            <clipPath id="left-semiClip">
-               <rec x="140" y="60" width="20" height="10"/>
-            </clipPath>
-         </defs>
-         <circle cx="150" cy="60" r="10" fill="pink" clip-path="url(#left-semiClip)"/>
-          <defs>
-            <clipPath id="right-semiClip">
-               <rec x="150" y="60" width="20" height="10"/>
-            </clipPath>
-         </defs>
-         <circle cx="160" cy="60" r="10" fill="pink" clip-path="url(#right-semiClip)"/>
-         <!-- boots -->
-      </svg>
-   </body>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VX HUB 100 Robot SVG</title>
+<style>
+  /* --- Page layout --- */
+  :root {
+    --bg1: #1b1f3b;
+    --bg2: #2a2250;
+    --hex1: #3b2d75;
+    --hex2: #5b4aa6;
+    --white: #ffffff;
+    --pink: #ff4fa3;
+    --pink-dark: #cc2f78;
+    --gray: #e9eef3;
+    --gray-dark: #cfd8e6;
+    --black: #12121a;
+    --accent: #76e1ff;
+  }
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+  }
+
+  /* --- Container --- */
+  .scene {
+    width: min(1100px, 94vw);
+    aspect-ratio: 16 / 9;
+    position: relative;
+  }
+
+  /* --- SVG defaults --- */
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* --- Background hex grid styling --- */
+  .hex {
+    fill: none;
+    stroke-width: 2.5;
+  }
+  .hex.s1 { stroke: var(--hex1); opacity: 0.35; }
+  .hex.s2 { stroke: var(--hex2); opacity: 0.35; }
+
+  /* --- Device styling --- */
+  .device-frame {
+    fill: none;
+    stroke: var(--pink);
+    stroke-width: 16;
+    filter: drop-shadow(0 10px 25px rgba(255, 79, 163, 0.35));
+  }
+  .device-bezel {
+    fill: #0d0e16;
+  }
+  .device-screen {
+    fill: #121426;
+    stroke: #23284d;
+    stroke-width: 2;
+  }
+  .device-gloss {
+    fill: url(#screenGloss);
+    opacity: 0.45;
+  }
+  .device-btn {
+    fill: var(--pink);
+    filter: drop-shadow(0 4px 8px rgba(255, 79, 163, 0.4));
+  }
+
+  /* --- VX HUB 100 text styling --- */
+  .txt-vx {
+    fill: var(--white);
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  .txt-hub {
+    fill: var(--pink);
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  .txt-100 {
+    fill: var(--white);
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  /* --- Robot base fills --- */
+  .robot-white { fill: var(--white); }
+  .robot-gray  { fill: var(--gray); }
+  .robot-gray-dark { fill: var(--gray-dark); }
+  .robot-pink  { fill: var(--pink); }
+  .robot-pink-dark { fill: var(--pink-dark); }
+  .robot-black { fill: var(--black); }
+
+  /* --- Robot strokes --- */
+  .stroke-soft { stroke: #d6deea; stroke-width: 2; }
+  .stroke-strong { stroke: #b9c5d8; stroke-width: 3; }
+
+  /* --- Shadows and highlights --- */
+  .shadow-soft { filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25)); }
+  .shadow-strong { filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35)); }
+  .inner-shadow { filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25)); }
+  .highlight { filter: drop-shadow(0 -2px 2px rgba(255, 255, 255, 0.35)); }
+
+  /* --- Face elements --- */
+  .eye { fill: var(--accent); }
+  .mouth { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; fill: none; }
+
+  /* --- Touch glow near device --- */
+  .touch-glow { fill: url(#touchGlow); opacity: 0.35; }
+
+  /* --- Make text smooth --- */
+  text { font-family: "Segoe UI", Roboto, Ubuntu, Inter, Arial, sans-serif; }
+
+  /* --- Responsive tweaks --- */
+  @media (max-width: 700px) {
+    .scene { aspect-ratio: 3 / 4; }
+    .txt-vx, .txt-hub, .txt-100 { font-size: 28px !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="scene">
+    <svg viewBox="0 0 1200 800" role="img" aria-label="Friendly robot touching a pink tech device screen with VX HUB 100 text">
+      <defs>
+        <!-- Linear gloss for device screen -->
+        <linearGradient id="screenGloss" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
+          <stop offset="35%" stop-color="#ffffff" stop-opacity="0.08" />
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+        </linearGradient>
+
+        <!-- Soft glow where robot hand meets device -->
+        <radialGradient id="touchGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ff4fa3" stop-opacity="0.8" />
+          <stop offset="100%" stop-color="#ff4fa3" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+
+      <!-- =========================
+           Background hex grid
+      ========================== -->
+      <g id="background">
+        <!-- COMMENT: Hex grid rows -->
+        <!-- Row 1 -->
+        <polygon class="hex s1" points="80,120 110,102 140,120 140,156 110,174 80,156" />
+        <polygon class="hex s2" points="150,160 180,142 210,160 210,196 180,214 150,196" />
+        <polygon class="hex s1" points="220,120 250,102 280,120 280,156 250,174 220,156" />
+        <polygon class="hex s2" points="290,160 320,142 350,160 350,196 320,214 290,196" />
+        <polygon class="hex s1" points="360,120 390,102 420,120 420,156 390,174 360,156" />
+        <!-- Row 2 -->
+        <polygon class="hex s2" points="100,240 130,222 160,240 160,276 130,294 100,276" />
+        <polygon class="hex s1" points="170,280 200,262 230,280 230,316 200,334 170,316" />
+        <polygon class="hex s2" points="240,240 270,222 300,240 300,276 270,294 240,276" />
+        <polygon class="hex s1" points="310,280 340,262 370,280 370,316 340,334 310,316" />
+        <polygon class="hex s2" points="380,240 410,222 440,240 440,276 410,294 380,276" />
+        <!-- Row 3 -->
+        <polygon class="hex s1" points="80,360 110,342 140,360 140,396 110,414 80,396" />
+        <polygon class="hex s2" points="150,400 180,382 210,400 210,436 180,454 150,436" />
+        <polygon class="hex s1" points="220,360 250,342 280,360 280,396 250,414 220,396" />
+        <polygon class="hex s2" points="290,400 320,382 350,400 350,436 320,454 290,436" />
+        <polygon class="hex s1" points="360,360 390,342 420,360 420,396 390,414 360,396" />
+        <!-- Faint far-right cluster -->
+        <polygon class="hex s1" points="960,140 990,122 1020,140 1020,176 990,194 960,176" />
+        <polygon class="hex s2" points="1030,180 1060,162 1090,180 1090,216 1060,234 1030,216" />
+        <polygon class="hex s1" points="1100,140 1130,122 1160,140 1160,176 1130,194 1100,176" />
+      </g>
+
+      <!-- =========================
+           Device (pink-framed tablet)
+      ========================== -->
+      <g id="device" transform="translate(720,120)">
+        <!-- COMMENT: Outer device frame -->
+        <rect class="device-frame shadow-strong" x="0" y="0" width="420" height="600" rx="40" ry="40" />
+
+        <!-- COMMENT: Inner bezel background -->
+        <rect class="device-bezel" x="18" y="18" width="384" height="564" rx="28" />
+
+        <!-- COMMENT: Screen area -->
+        <rect class="device-screen" x="42" y="60" width="336" height="480" rx="16" />
+
+        <!-- COMMENT: Gloss highlight on screen -->
+        <path class="device-gloss"
+              d="M42,80 Q210,40 378,120 L378,280 Q210,320 42,280 Z" />
+
+        <!-- COMMENT: Side button -->
+        <rect class="device-btn" x="400" y="180" width="16" height="120" rx="8" />
+
+        <!-- COMMENT: VX HUB 100 stacked text -->
+        <g id="deviceText" transform="translate(120,140)">
+          <text class="txt-vx" x="0" y="0" font-size="48">VX</text>
+          <text class="txt-hub" x="0" y="64" font-size="48">HUB</text>
+          <text class="txt-100" x="0" y="128" font-size="48">100</text>
+        </g>
+      </g>
+
+      <!-- =========================
+           Robot
+      ========================== -->
+      <g id="robot" transform="translate(420,220)">
+        <!-- COMMENT: Touch glow near hand -->
+        <ellipse class="touch-glow" cx="430" cy="90" rx="60" ry="60" />
+
+        <!-- --- HEAD --- -->
+        <!-- COMMENT: Head shell back -->
+        <ellipse class="robot-gray shadow-soft" cx="180" cy="60" rx="110" ry="90" />
+        <!-- COMMENT: Head shell front -->
+        <ellipse class="robot-white stroke-soft highlight" cx="180" cy="60" rx="100" ry="80" />
+
+        <!-- COMMENT: Visor panel -->
+        <rect class="robot-black inner-shadow" x="110" y="22" width="140" height="76" rx="18" />
+
+        <!-- COMMENT: Eye left -->
+        <circle class="eye" cx="148" cy="60" r="10" />
+        <!-- COMMENT: Eye right -->
+        <circle class="eye" cx="212" cy="60" r="10" />
+        <!-- COMMENT: Smiling mouth -->
+        <path class="mouth" d="M140,78 Q180,100 220,78" />
+
+        <!-- COMMENT: Pink ear accents -->
+        <circle class="robot-pink-dark" cx="100" cy="60" r="12" />
+        <circle class="robot-pink-dark" cx="260" cy="60" r="12" />
+
+        <!-- --- NECK --- -->
+        <!-- COMMENT: Neck connector -->
+        <rect class="robot-gray-dark" x="160" y="110" width="40" height="22" rx="8" />
+
+        <!-- --- TORSO --- -->
+        <!-- COMMENT: Torso shell -->
+        <path class="robot-white stroke-strong shadow-strong"
+              d="M100,140
+                 C80,200 80,300 140,340
+                 L220,340
+                 C280,300 280,200 260,140
+                 Z" />
+        <!-- COMMENT: Torso accent panel -->
+        <path class="robot-pink"
+              d="M130,170
+                 C120,220 120,270 160,300
+                 L200,300
+                 C240,270 240,220 230,170
+                 Z" />
+
+        <!-- COMMENT: Chest indicator light -->
+        <circle class="eye" cx="180" cy="240" r="9" />
+
+        <!-- --- LEFT ARM (near device) --- -->
+        <!-- COMMENT: Shoulder joint -->
+        <circle class="robot-gray-dark" cx="110" cy="190" r="18" />
+        <!-- COMMENT: Upper arm -->
+        <rect class="robot-white" x="96" y="200" width="28" height="70" rx="14" />
+        <!-- COMMENT: Elbow joint -->
+        <circle class="robot-gray-dark" cx="110" cy="274" r="14" />
+        <!-- COMMENT: Forearm -->
+        <rect class="robot-white" x="102" y="288" width="22" height="82" rx="11" />
+
+        <!-- COMMENT: Hand base -->
+        <ellipse class="robot-white" cx="112" cy="376" rx="16" ry="12" />
+        <!-- COMMENT: Finger 1 touching device -->
+        <rect class="robot-pink" x="420" y="90" width="14" height="46" rx="7" transform="translate(-318,288) rotate(-8)" />
+        <!-- COMMENT: Finger 2 -->
+        <rect class="robot-pink-dark" x="406" y="118" width="12" height="34" rx="6" transform="translate(-318,288) rotate(-12)" />
+        <!-- COMMENT: Finger 3 -->
+        <rect class="robot-pink-dark" x="430" y="116" width="10" height="32" rx="5" transform="translate(-318,288) rotate(-2)" />
+
+        <!-- --- RIGHT ARM --- -->
+        <!-- COMMENT: Shoulder joint -->
+        <circle class="robot-gray-dark" cx="250" cy="190" r="18" />
+        <!-- COMMENT: Upper arm -->
+        <rect class="robot-white" x="236" y="200" width="28" height="70" rx="14" />
+        <!-- COMMENT: Elbow joint -->
+        <circle class="robot-gray-dark" cx="250" cy="274" r="14" />
+        <!-- COMMENT: Forearm -->
+        <rect class="robot-white" x="242" y="288" width="22" height="82" rx="11" />
+        <!-- COMMENT: Hand base -->
+        <ellipse class="robot-white" cx="252" cy="376" rx="16" ry="12" />
+        <!-- COMMENT: Hand accent -->
+        <path class="robot-pink-dark" d="M244,368 Q252,358 260,368 Q252,378 244,368 Z" />
+
+        <!-- --- HIPS --- -->
+        <!-- COMMENT: Hip plate -->
+        <rect class="robot-gray-dark" x="160" y="340" width="40" height="20" rx="8" />
+
+        <!-- --- LEGS --- -->
+        <!-- COMMENT: Left leg upper -->
+        <rect class="robot-white" x="150" y="360" width="28" height="84" rx="14" />
+        <!-- COMMENT: Left knee joint -->
+        <circle class="robot-gray-dark" cx="164" cy="450" r="12" />
+        <!-- COMMENT: Left leg lower -->
+        <rect class="robot-white" x="154" y="462" width="20" height="84" rx="10" />
+        <!-- COMMENT: Left foot -->
+        <path class="robot-gray" d="M146,548 Q164,540 172,548 L172,560 Q160,568 146,560 Z" />
+
+        <!-- COMMENT: Right leg upper -->
+        <rect class="robot-white" x="202" y="360" width="28" height="84" rx="14" />
+        <!-- COMMENT: Right knee joint -->
+        <circle class="robot-gray-dark" cx="216" cy="450" r="12" />
+        <!-- COMMENT: Right leg lower -->
+        <rect class="robot-white" x="206" y="462" width="20" height="84" rx="10" />
+        <!-- COMMENT: Right foot -->
+        <path class="robot-gray" d="M198,548 Q216,540 224,548 L224,560 Q212,568 198,560 Z" />
+
+        <!-- --- PINK ACCENT PANELS --- -->
+        <!-- COMMENT: Torso side accents -->
+        <path class="robot-pink-dark" d="M104,220 Q96,260 118,286 Q110,236 104,220 Z" />
+        <path class="robot-pink-dark" d="M256,220 Q264,260 242,286 Q250,236 256,220 Z" />
+      </g>
+    </svg>
+  </div>
+</body>
 </html>
